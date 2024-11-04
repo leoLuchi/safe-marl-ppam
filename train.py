@@ -2,10 +2,11 @@ import gymnasium as gym
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 import cocktail_party
-from agents import IndependentQAgent          # for independent Q agent
-# from agents import MAPPAMAgent                for PPAM joint action learner
-# from agents import CPAgent                    for joint action learner
-# from agents import MAPPAMIndependentAgent     for PPAM independent Q agent
+from gymnasium.wrappers import RecordEpisodeStatistics
+# from agents import IndependentQAgent        # for independent Q agent
+# from agents import MAPPAMAgent              # for PPAM joint action learner
+from agents import CPAgent                  # for joint action learner
+# from agents import MAPPAMIndependentAgent   # for PPAM independent Q agent
 
 def print_info_last_n(n, infos, num_violations):
     length = 0
@@ -27,7 +28,7 @@ def cocktail_party_agent():
     discount_factor = 0.99  #gamma
     env = gym.make("cocktail_party-v0")
 
-    agent = IndependentQAgent(
+    agent = CPAgent(
         env=env,
         learning_rate=learning_rate,
         initial_epsilon=start_epsilon,
@@ -36,7 +37,7 @@ def cocktail_party_agent():
         discount_factor=discount_factor
     )
 
-    env = gym.wrappers.RecordEpisodeStatistics(env, deque_size=n_episodes)
+    env = RecordEpisodeStatistics(env, buffer_length=n_episodes)
     infos = []
     violations = []
     n = 5000
