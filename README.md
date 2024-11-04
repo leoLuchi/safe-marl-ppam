@@ -2,11 +2,10 @@
 
 ### Requirements
 
-Each experiment has its own `requirements.txt`, which can be found in the corresponding folder. 
 
-All experiments can be run with Python 3.11.4. We highly suggest to setup different virtual environments, one per experiment.
+The requirements are in `requirements.txt` file. Moreover, we need to install cocktail-party gym custom environment.
 
-To create a virtual environment and install the requirements:
+To create a virtual environment and install the requirements and cocktail-party environment:
  
 	python -m venv path/to/venv
 	source path/to/venv/bin/activate
