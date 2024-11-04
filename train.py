@@ -2,6 +2,20 @@ import gymnasium as gym
 from matplotlib import pyplot as plt
 from tqdm import tqdm
 import cocktail_party
+from agents import IndependentQAgent          # for independent Q agent
+# from agents import MAPPAMAgent                for PPAM joint action learner
+# from agents import CPAgent                    for joint action learner
+# from agents import MAPPAMIndependentAgent     for PPAM independent Q agent
+
+def print_info_last_n(n, infos, num_violations):
+    length = 0
+    total_reward = 0
+    for j, info in enumerate(infos[-n:]):
+        total_reward += info['episode']['r']
+        length += info['episode']['l']
+    print("\nReward: {}; \nLength: {};".format(float(total_reward) / n, float(length) / n))
+    print("\nTotal violations: {}".format(num_violations))
+    # print("\nTask: {}".format(task))
 
 
 def cocktail_party_agent():
@@ -12,7 +26,6 @@ def cocktail_party_agent():
     final_epsilon = 0.1
     discount_factor = 0.99  #gamma
     env = gym.make("cocktail_party-v0")
-    agents = []
 
     agent = IndependentQAgent(
         env=env,
@@ -99,5 +112,3 @@ def cocktail_party_agent():
 
 if __name__ == "__main__":
     cocktail_party_agent()
-    # random_agent()
-    # cocktail_party_random_agent()
